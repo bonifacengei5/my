@@ -3,7 +3,7 @@
 {% block content %}
     <div>
         <h1 class="text-secondary text-center">Update-products</h1>
-        <form class="product-form" method="post" action="/update-product/{{ update.id }}}">
+        <form class="product-form" method="post" action="/update-product/{{ product.id }}">
             <p>{{ success }}</p>
             {% csrf_token %}
             <input value="{{ product.name }}"  required class="form-control" placeholder="update name" name="p-name" type="text"><br>

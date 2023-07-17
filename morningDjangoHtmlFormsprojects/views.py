@@ -1,6 +1,7 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from .models import Products
 from django.contrib import messages
+from .forms import UserRegistrationForm
 
 
 def index(request):
@@ -33,15 +34,18 @@ def products(request):
     context = {"all_products": all_products}
     return render(request, 'products.html', context)
 
+
 def delete_product(request, id):
-    product =Products.objects.get(id=id)
+    product = Products.objects.get(id=id)
     product.delete()
     messages.success(request, 'Product deleted successfully')
     return redirect('all-products')
+
+
 def update_product(request, id):
     product = Products.objects.get(id=id)
     context = {"product": product}
-    if request.method=="POST":
+    if request.method == "POST":
         update_name = request.POST.get('p-name')
         update_qtty = request.POST.get('p-qtty')
         update_size = request.POST.get('p-size')
@@ -52,5 +56,18 @@ def update_product(request, id):
         product.price = update_price
         product.save()
         messages.success(request, 'Product updates successfully')
+        return redirect('all-products')
     return render(request, 'update-product.html', context)
 
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User registered successfully')
+            return redirect('user-registration')
+    else:
+        form = UserRegistrationForm()
+
+    return render(request, 'register.html', {'form': form})
