@@ -34,20 +34,28 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">CONTACT US</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'all-products' %}">PRODUCTS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add-product-page' %}">ADD PRODUCTS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'user-registration' %}">REGISTER</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">LOGIN</a>
-                </li>
-                 <li class="nav-item">
-                    <a class="nav-link" href="#">BLOG</a>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'all-products' %}">PRODUCTS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add-product-page' %}">ADD PRODUCTS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user-logout' %}">LOGOUT</a>
+                    </li>
+
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user-registration' %}">REGISTER</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user-login' %}">LOGIN</a>
+                    </li>
+
+                {% endif %}
+
+                <a class="nav-link" href="#">BLOG</a>
                 </li>
 
             </ul>
@@ -55,10 +63,10 @@
     </nav>
 </section>
 <section>
-{% for message in messages %}
-    <p class="text-success">{{ message }}</p>
+    {% for message in messages %}
+        <p class="text-success">{{ message }}</p>
 
-{% endfor %}
+    {% endfor %}
     {% block content %}
     {% endblock %}
 </section>
