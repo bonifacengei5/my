@@ -78,3 +78,13 @@ def register(request):
         form = UserRegistrationForm()
 
     return render(request, 'register.html', {'form': form})
+def shop(request):
+    all_products = Products.objects.all()
+    context= {"all_products": all_products}
+    return render(request, 'shop.html', context)
+
+def pay(request, id):
+    product = Products.objects.get(id=id)
+    context = {"product": product}
+    return render(request, 'pay.html', context)
+
